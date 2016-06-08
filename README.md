@@ -11,4 +11,4 @@ Start:
 
 Logs: 
 
-    docker logs -f openbill_webhook
+    docker logs -f openbill_webhooks
