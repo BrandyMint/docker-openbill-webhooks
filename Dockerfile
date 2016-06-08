@@ -30,4 +30,4 @@ RUN mkdir /var/log/openbill-webhooks && \
     ln -sf /dev/stderr /var/log/openbill-webhooks/error.log && \
     ln -sf /dev/stdout /var/log/openbill-webhooks/info.log
 
-CMD ["iex", "-S mix"]
+CMD ["iex", "-S", "mix"]
