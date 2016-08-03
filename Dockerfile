@@ -12,7 +12,7 @@ RUN \
   dpkg -i /tmp/erlang-solutions_1.0_all.deb && \
   apt-get update && \
   apt-get -y upgrade && \
-  apt-get install -y git erlang elixir && \
+  apt-get install -y git esl-erlang=1:18.2 elixir=1.2.6-1 && \
   rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/local
