@@ -7,19 +7,21 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 RUN \
-  apt-get update && apt-get -y install wget && \
-  wget -q https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb -O /tmp/erlang-solutions_1.0_all.deb && \
-  dpkg -i /tmp/erlang-solutions_1.0_all.deb && \
+  apt-get update && apt-get -y install wget apt-transport-https; \
+	echo 'deb https://packages.erlang-solutions.com/ubuntu trusty contrib'| tee /etc/apt/sources.list.d/erlang.list; \
+	wget https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc -O-| apt-key add -; \
   apt-get update && \
   apt-get -y upgrade && \
   apt-get install -y git esl-erlang=1:18.2 elixir=1.2.6-1 && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/local
-RUN git clone https://github.com/openbill-service/openbill-webhooks.git
+
+ADD openbill-webhooks/ /usr/local/openbill-webhooks
+
 WORKDIR /usr/local/openbill-webhooks
 ENV MIX_ENV prod
 RUN \
+	git pull && \
   cp config/prod_example.exs config/prod.exs && \
   mix local.hex --force && \
   mix local.rebar --force && \
